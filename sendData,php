@@ -1,0 +1,164 @@
+public function sendData($id){
+    
+    if(isset($_POST['submit'])){
+      // echo 'sent it ';
+      $validationFlag = true;
+      $validationList = [
+          "uniform"=> true,
+          "position"=> true,
+          "name"=> true,
+          "club"=> true,
+          "birth"=> true,
+          "height"=> true,
+          "weight"=> true,
+          "country"=> true,
+      ];
+      
+      
+      
+      
+      $uniform= $_POST['uniform']; 
+      $position = $_POST['position'];
+      $name = $_POST['name'];
+      $club = $_POST['club'];    
+      $birth = $_POST['birth'];  
+      $height = $_POST['height'];  
+      $weight = $_POST['weight'];  
+      $country = $_POST['country']; 
+
+      if(!$name){
+        $validationList['name'] = '名前は必須入力です';
+        $validationFlag = false;
+      };
+
+      if(!$uniform){
+        $validationList['uniform'] = '背番号は必須入力です';
+        $validationFlag = false;
+      }else{
+        $str = $uniform;
+        for($i =0; $i<strlen($uniform); $i++){
+            if($str[0] == '0' || $str[0] == '1' || $str[0] == '2'|| $str[0] == '3'|| $str[0] == '4'|| $str[0] == '5'|| $str[0] == '6'|| $str[0] == '7'|| $str[0] == '8' || $str[0] == '9'){
+            } else{
+                $validationList['uniform'] = '背番号は0-9の数字のみでご入力ください';
+                $validationFlag = false;
+            };
+            $str = substr($str, 1);
+        };
+      }
+
+
+      if(!$club){
+        $validationList['club'] = '所属チームは必須入力です。';
+        $validationFlag = false;
+      }
+
+      if(!$birth){
+        $validationList['birth'] = '誕生日は必須入力です。';
+        $validationFlag = false;
+      }else{
+        $parts = explode('-',$birth);
+        $year =   $parts[0];
+        $year = (int)$year;
+
+        $month =  $parts[1];
+        $month= (int)$month;
+
+        $day =  $parts[2];
+        $day= (int)$day;
+        // $parts = explode('-', '2068-06-15');
+        // echo $parts[0];
+        if(!checkdate ( $month, $day, $year )){
+          $validationList['birth'] = '存在しない日付です';
+          $validationFlag = false;
+        };
+      };
+
+
+      if(!$weight){
+        $validationList['weight'] = '体重は必須入力です。';
+        $validationFlag = false;
+      }else{
+        $str = $weight;
+        for($i =0; $i<strlen($weight); $i++){
+            if($str[0] == '0' || $str[0] == '1' || $str[0] == '2'|| $str[0] == '3'|| $str[0] == '4'|| $str[0] == '5'|| $str[0] == '6'|| $str[0] == '7'|| $str[0] == '8' || $str[0] == '9'){
+            } else{
+                $validationList['weight'] = '体重は0-9の数字のみでご入力ください';
+                $validationFlag = false;
+            };
+            $str = substr($str, 1);
+        };
+      }
+
+
+      if(!$height){
+        $validationList['height'] = '身長は必須入力です。';
+        $validationFlag = false;
+      }else{
+        $str = $height;
+        for($i =0; $i<strlen($height); $i++){
+            if($str[0] == '0' || $str[0] == '1' || $str[0] == '2'|| $str[0] == '3'|| $str[0] == '4'|| $str[0] == '5'|| $str[0] == '6'|| $str[0] == '7'|| $str[0] == '8' || $str[0] == '9'){
+            } else{
+                $validationList['height'] = '身長は0-9の数字のみでご入力ください';
+                $validationFlag = false;
+            };
+            $str = substr($str, 1);
+        };
+      }
+
+     $_SESSION['validationList'] = $validationList ;
+      $_SESSION['validationFlag'] = $validationFlag ;
+    // -------------------------------------------------------------
+
+      if(!$validationFlag){
+        return;
+      }else{
+
+        
+
+      
+        
+        $uniform = mysqli_real_escape_string($GLOBALS['connection'],$uniform );
+        $name = mysqli_real_escape_string($GLOBALS['connection'],$name );
+        $club = mysqli_real_escape_string($GLOBALS['connection'],$club );
+        $birth = mysqli_real_escape_string($GLOBALS['connection'],$birth );
+        $height = mysqli_real_escape_string($GLOBALS['connection'],$height );
+        $weight = mysqli_real_escape_string($GLOBALS['connection'],$weight );
+        
+        
+        
+        $sql = " update players set name = '". $name . "' ";
+        $sql = " update players set club = '". $club . "' ";
+        $sql = " update players set position = '". $position . "' ";
+        $sql = " update players set birth = '". $birth . "' ";
+        $sql .= ", country_id = ". $country . "";
+        $sql .= ", uniform_num = ". $uniform . "";
+        $sql .= ", height = ". $height . "";
+        $sql .= ", weight = ". $weight . "";
+
+        $sql .= " where id = " . $id;
+        $result =mysqli_query($GLOBALS['connection'], $sql);
+
+        $this->updateaTable();
+
+
+        
+
+        // INSERT INTO new_table (Foo, Bar, Fizz, Buzz) SELECT Foo, Bar, Fizz, Buzz FROM initial_table
+    
+        if(!$result){
+          die('failed sending data. <br>'. mysqli_error($GLOBALS['connection']));
+          
+        }else{
+          header("Location: ./index.php");
+          die();
+        }
+
+
+
+      }
+
+      
+    }else{
+      // echo 'not yet';
+    }
+  }
