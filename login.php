@@ -30,7 +30,7 @@
     </script>
 </head>
 <div class="container">
-  <h1>新規登録</h1>
+  <h1>ログイン</h1>
   <hr>
   <form name="myform" action="registration.php" method="post" onsubmit="return confirm('送信してもよろしいですか？');">
 
