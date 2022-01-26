@@ -13,26 +13,11 @@
   $validationFlag = $_SESSION['validationFlag'];?>
 <head>
   <link rel="stylesheet" type="text/css" href="../../public/css/registration.css">
-  <script> 
-    function validateForm() {
-      let name = document.querySelector('.name').value;
-      let kana = document.querySelector('.kana').value;
-      let tel = document.querySelector('.tel').value;
-      let email  = document.querySelector('.email').value;
-      let main = document.querySelector('.main').value;
-
-      let flag = true;
-      let warning = ''
-      if(!flag) alert(`${warning}`);
-      return true; 
-    }
-
-    </script>
 </head>
 <div class="container">
   <h1>ログイン</h1>
   <hr>
-  <form name="myform" action="registration.php" method="post" onsubmit="return confirm('送信してもよろしいですか？');">
+  <form name="myform" action="registration.php" method="post" ">
 
     <div class="row">
       <div class="col-25">
