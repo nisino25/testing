@@ -56,6 +56,8 @@ public function login(){
                 $validationList['email'] = 'メールアドレスかパスワードが違います';
                 $validationFlag = false;
             }else{
+                // procced login ------------------------   
+
                 $email = mysqli_real_escape_string($GLOBALS['connection'],$email );
                 $password = mysqli_real_escape_string($GLOBALS['connection'],$password );
 
