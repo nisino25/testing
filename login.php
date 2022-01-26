@@ -7,7 +7,7 @@
   // $countries = $controller->grabCountryList();
   // $detail = $controller->detail();
 
-  $controller->register();
+  $controller->login();
 
   $validationList = $_SESSION['validationList'];
   $validationFlag = $_SESSION['validationFlag'];?>
