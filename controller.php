@@ -1,4 +1,4 @@
-public function register(){
+public function login(){
     
     if(isset($_POST['submit'])){
       // echo 'sent it ';
