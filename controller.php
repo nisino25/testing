@@ -56,30 +56,9 @@ public function login(){
                 $validationList['email'] = 'メールアドレスかパスワードが違います';
                 $validationFlag = false;
             }else{
-                // procced login ------------------------   
-
-                $email = mysqli_real_escape_string($GLOBALS['connection'],$email );
-                $password = mysqli_real_escape_string($GLOBALS['connection'],$password );
-
-
-                $sql = "INSERT INTO users(id, country_id, email, password, role) VALUES (NULL, 0, '$email', '$password', 0)";
-
-                $result =mysqli_query($GLOBALS['connection'], $sql);
-
-                // $this->updateaTable();
-
-
-
-
-                // INSERT INTO new_table (Foo, Bar, Fizz, Buzz) SELECT Foo, Bar, Fizz, Buzz FROM initial_table
-
-                if(!$result){
-                  die('failed sending data. <br>'. mysqli_error($GLOBALS['connection']));
-
-                }else{
-                  header("Location: ./index.php");
-                  die();
-                }
+                // procced login ------------------------  
+                $_SESSION['isLoggedin'] = true
+                $_SESSION['logedinEmail'] = $email
             }
             
             
